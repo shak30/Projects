@@ -38,6 +38,10 @@ missing=data[data.isnull().any(axis=1)]
 
 data2=data.dropna(axis=0)
 
+#===============================
+#Cheking correlation between variables
+#===============================
+
 #checking correlation between independent variables
 correlation= data2.corr()
 
@@ -45,10 +49,45 @@ correlation= data2.corr()
 data2.columns
 
 #checking gender proportion
-gender=pd.crosstab(index=data2["gender"],columns='count',normalize=True)
+gender=pd.crosstab(index=data2["gender"],
+                   columns='count',
+                   normalize=True)
 
 #gender vs salarystatus
 gen_vs_salstat=pd.crosstab(index=data2['gender'],
                            columns=data2['SalStat'],
                            margins=True,
                            normalize='index')
+
+#Freq distribution of salarystatus 
+salstat=sns.countplot(data2['SalStat'])
+
+#for age distribution
+sns.distplot(data2['age'],bins=10,kde=False)
+## People with age 20-45 are high in frequency
+
+#Age vs salarystatus
+sns.boxplot('SalStat','age',data=data2)
+
+data2.groupby('SalStat')['age'].median()
+
+#jobtype vs salarystatus
+jobtype_vs_salstat=pd.crosstab(index=data2['JobType'],
+                               columns=data2['SalStat'],
+                               margins=True,
+                               normalize='index')
+
+#education vs salarystatus
+edtype_vs_alstat=pd.crosstab(index=data2['EdType'],
+                               columns=data2['SalStat'],
+                               margins=True,
+                               normalize='index')
+
+#occupation vs salarystatus
+occupation_vs_salstat=pd.crosstab(index=data2['occupation'],
+                               columns=data2['SalStat'],
+                               margins=True,
+                               normalize='index')
+
+
+
