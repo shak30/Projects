@@ -89,5 +89,8 @@ occupation_vs_salstat=pd.crosstab(index=data2['occupation'],
                                margins=True,
                                normalize='index')
 
+#hoursperweek vs salarystatus
+hoursperweek=sns.boxplot('hoursperweek','SalStat',data=data2)
+
 
 
