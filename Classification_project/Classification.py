@@ -102,6 +102,61 @@ sns.distplot(data2['capitalloss'],bins=10,kde=False)
        #LOGISTIC REGRESSION
 #=======================================================
 
+# reindexing the salary status names to 0,1
+data2['SalStat']=data2['SalStat'].map({' less than or equal to 50,000':0,' greater than 50,000':1})
+print(data2['SalStat'])
+
+new_data=pd.get_dummies(data2, drop_first=True)
+
+#Storing the column names 
+column_list=list(new_data.columns)
+print(column_list)
+
+#Seperating the input names from data
+features=list(set(column_list)-set(['SalStat']))
+print(features)
+
+#storing the column values in Y
+y=new_data['SalStat'].values
+print(y)
+
+#storing the input values from features in X
+x=new_data[features].values
+print(x)
+
+#splitting the data into train and test
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+
+train_x,test_x,train_y,test_y=train_test_split(x,y,test_size=0.3,random_state=0)
+
+#make an instance of the model
+logistic=LogisticRegression()
+
+# fitting the values for x and y
+logistic.fit(train_x,train_y)
+logistic.coef_
+logistic.intercept_
+
+
+# prediction from test data
+prediction = logistic.predict(test_x)
+
+#confusion matrix
+confusion_matrix= confusion_matrix(test_y, prediction)
+print(confusion_matrix)
+
+#calculating the accuracy
+accuracy_score= accuracy_score(test_y, prediction)
+print(accuracy_score)
+
+#Printing the misclassified values from prediction
+print('Misclassified samples: %d' % (test_y != prediction).sum())
+      
+
 
 
 
