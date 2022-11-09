@@ -38,9 +38,9 @@ missing=data[data.isnull().any(axis=1)]
 
 data2=data.dropna(axis=0)
 
-#===============================
+#======================================
 #Cheking correlation between variables
-#===============================
+#======================================
 
 #checking correlation between independent variables
 correlation= data2.corr()
@@ -88,6 +88,21 @@ occupation_vs_salstat=pd.crosstab(index=data2['occupation'],
                                columns=data2['SalStat'],
                                margins=True,
                                normalize='index')
+
+#hoursperweek vs salarystatus
+hoursperweek=sns.boxplot('hoursperweek','SalStat',data=data2)
+
+#capital gain and loss
+sns.distplot(data2['capitalgain'],bins=10,kde=False)
+
+sns.distplot(data2['capitalloss'],bins=10,kde=False)
+
+
+#=======================================================
+       #LOGISTIC REGRESSION
+#=======================================================
+
+
 
 
 
