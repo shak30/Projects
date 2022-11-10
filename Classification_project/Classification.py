@@ -223,9 +223,40 @@ print('Misclassified samples: %d' % (test_y != prediction).sum())
 
 
 #=========================================================================
-            #KNN REGRESSION MODEL
+            #KNN CLASSIFIER MODEL
 #=========================================================================
 
+from sklearn.neighbors import KNeighborsClassifier
 
+import matplotlib.pyplot as plt
+
+KNN_classifier = KNeighborsClassifier(n_neighbors = 5)
+
+KNN_classifier.fit(train_x,train_y)
+
+prediction2= KNN_classifier.predict(test_x)
+
+#Performancce metrics check
+confusion_matrix2= confusion_matrix(test_y, prediction)
+print(confusion_matrix2)
+ 
+#calculating the accuracy
+accuracy_score2= accuracy_score(test_y, prediction)
+print(accuracy_score2)
+
+Misclassified_sample=[]
+# Calculating error for K values between 1 and 20
+for i in range (1,20):
+        knn = KNeighborsClassifier(n_neighbors=i)
+        knn.fit(train_x,train_y)
+        pred_i = knn.predict(test_x)
+        Misclassified_sample.append((test_y != pred_i).sum())
+        
+print(Misclassified_sample)
+
+#------------------------------------------------------------------------------
+# KNN model has almost similar accuracy_score compared to Logistic regression model and 
+# K=16 has less no of misclassified sample. So, we can use KNN model with K=16.
+#------------------------------------------------------------------------------
 
 
